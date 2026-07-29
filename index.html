@@ -19,6 +19,12 @@
     --ink-soft: #6b6255;
     --line: #dcd0b8;
     --radius: 14px;
+    
+    /* Hohe Kontrastfarben für Buttons */
+    --btn-plus-bg: #16a34a;
+    --btn-plus-border: #14532d;
+    --btn-minus-bg: #dc2626;
+    --btn-minus-border: #7f1d1d;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
   html,body{height:100%;}
@@ -176,18 +182,45 @@
   }
   .cart-line .cl-name{font-weight:600;font-size:14px;}
   .cart-line .cl-sub{font-size:12px;color:var(--ink-soft);}
+
+  /* ---- STEPPER BUTTONS (PLUS / MINUS) OVERHAUL FOR HIGH CONTRAST ---- */
   .stepper{display:flex;align-items:center;gap:10px;}
   .stepper button{
-    width:30px;height:30px;
+    width:36px;
+    height:36px;
     border-radius:50%;
-    border:1px solid var(--line);
-    background:var(--cream-2);
-    font-size:16px;
-    font-weight:700;
+    font-size:18px;
+    font-weight:800;
     cursor:pointer;
     line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#FFFFFF;
+    box-shadow:0 2px 4px rgba(0,0,0,0.15);
+    transition:transform 0.1s, filter 0.1s;
   }
-  .stepper .n{min-width:20px;text-align:center;font-weight:700;}
+  .stepper button:active{
+    transform:scale(0.92);
+    filter:brightness(0.85);
+  }
+  .stepper button.btn-minus,
+  .stepper button.cl-minus {
+    background-color: var(--btn-minus-bg);
+    border: 1px solid var(--btn-minus-border);
+  }
+  .stepper button.btn-plus,
+  .stepper button.cl-plus {
+    background-color: var(--btn-plus-bg);
+    border: 1px solid var(--btn-plus-border);
+  }
+  .stepper .n{
+    min-width:24px;
+    text-align:center;
+    font-weight:800;
+    font-size:16px;
+    color: var(--ink);
+  }
 
   .pfand-section{
     padding:10px 16px 14px;
@@ -659,9 +692,9 @@ function renderCart(){
           <div class="cl-sub">${euro(p.price)} × ${qty} = ${euro(p.price*qty)}</div>
         </div>
         <div class="stepper">
-          <button class="cl-minus">−</button>
+          <button class="cl-minus btn-minus">−</button>
           <div class="n">${qty}</div>
-          <button class="cl-plus">+</button>
+          <button class="cl-plus btn-plus">+</button>
         </div>
       </div>`;
   });
@@ -701,9 +734,9 @@ function renderPfandCartSection(){
           <div class="pf-sub">${count > 0 ? '+' + count : count} im Warenkorb${subtext}</div>
         </div>
         <div class="stepper">
-          <button class="pf-btn" data-op="minus">−</button>
+          <button class="pf-btn btn-minus" data-op="minus">−</button>
           <div class="n">${count}</div>
-          <button class="pf-btn" data-op="plus">+</button>
+          <button class="pf-btn btn-plus" data-op="plus">+</button>
         </div>
       </div>`;
   }).join('');
@@ -1070,4 +1103,3 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 </script>
 </body>
 </html>
-
